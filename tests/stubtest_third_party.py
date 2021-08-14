@@ -6,11 +6,11 @@ import functools
 import subprocess
 import sys
 import tempfile
-import toml
 import venv
 from glob import glob
 from pathlib import Path
 
+import toml
 
 EXCLUDE_LIST = [
     "Flask",  # fails when stubtest tries to stringify some object
@@ -18,7 +18,7 @@ EXCLUDE_LIST = [
     "backports",  # errors on python version
     "six",  # ???
     "aiofiles",  # easily fixable, some platform specific difference between local and ci
-    "pycurl"  # install failure, missing libcurl
+    "pycurl",  # install failure, missing libcurl
 ]
 
 
@@ -106,10 +106,7 @@ def run_stubtest(dist: Path) -> None:
         except subprocess.CalledProcessError:
             print(f"stubtest failed for {dist.name}", file=sys.stderr)
             if not allowlist_path.exists():
-                print(
-                    "\n\nRe-running stubtest with --generate-allowlist.\n"
-                    f"Add the following to {allowlist_path}:"
-                )
+                print("\n\nRe-running stubtest with --generate-allowlist.\n" f"Add the following to {allowlist_path}:")
                 subprocess.run(cmd + ["--generate-allowlist"], env={"MYPYPATH": str(dist)})
                 print("\n\n")
             raise StubtestFailed from None
