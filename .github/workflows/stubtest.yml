@@ -1,6 +1,7 @@
 name: Run stubtest on all stubs
 
 on:
+  push: {}
   workflow_dispatch:
   schedule:
     - cron: "0 0 * * *"
@@ -41,7 +42,6 @@ jobs:
 
   stubtest-third-party:
     name: Check third party stubs with stubtest
-    if: github.repository == 'python/typeshed'
     runs-on: ubuntu-latest
     strategy:
       matrix:
