@@ -1,6 +1,6 @@
 import sys
 from _typeshed import SupportsWrite
-from typing import Any, Callable, Optional, Pattern, Sequence, TextIO, Union
+from typing import Any, Callable, Pattern, Sequence, TextIO
 
 if sys.platform == "win32":
     from .winterm import WinTerm
@@ -19,8 +19,8 @@ class StreamWrapper:
     @property
     def closed(self) -> bool: ...
 
-_WinTermCall = Callable[[Optional[int], bool, bool], None]
-_WinTermCallDict = dict[int, Union[tuple[_WinTermCall], tuple[_WinTermCall, int], tuple[_WinTermCall, int, bool]]]
+_WinTermCall = Callable[[int | None, bool, bool], None]
+_WinTermCallDict = dict[int, tuple[_WinTermCall] | tuple[_WinTermCall, int] | tuple[_WinTermCall, int, bool]]
 
 class AnsiToWin32:
     ANSI_CSI_RE: Pattern[str] = ...
